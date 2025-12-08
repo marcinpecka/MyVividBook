@@ -65,7 +65,19 @@ export default function ColoringPageClient({ initialData, error, errorMessage }:
                 </div>
 
                 <ColoringPageCanvas imageUrl={currentImage || ''} alt={initialData.title} />
-                <div className="text-xs text-zinc-400 break-all max-h-20 overflow-hidden opacity-50">{currentImage ? (currentImage.startsWith('<svg') ? 'SVG Generated' : currentImage) : ''}</div>
+                <div className="flex gap-2 justify-between w-full max-w-md items-center">
+                    <div className="text-xs text-zinc-400 break-all max-h-20 overflow-hidden opacity-50 flex-1">
+                        {currentImage ? (currentImage.startsWith('<svg') ? 'SVG Generated' : 'Image Loaded') : ''}
+                    </div>
+                    {currentImage !== initialData.baseImageUrl && (
+                        <button
+                            onClick={() => setCurrentImage(initialData.baseImageUrl)}
+                            className="text-xs text-red-500 hover:text-red-600 font-medium px-2 py-1"
+                        >
+                            Reset to Original
+                        </button>
+                    )}
+                </div>
 
                 <div className="w-full max-w-md">
                     <PromptInput onSubmit={handlePromptSubmit} isLoading={isLoading} />
